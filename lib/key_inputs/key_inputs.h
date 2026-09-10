@@ -14,7 +14,7 @@ class key_inputs
     public:
     key_inputs();
     void send_matrix(std::array<std::array<bool, 6>, 18>& matrix);
-    uint64_t send_output() const;
+    uint64_t get_output() const;
 
     private:
     uint8_t modifiers;

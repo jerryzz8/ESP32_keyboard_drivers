@@ -45,7 +45,7 @@ void key_inputs::send_matrix(std::array<std::array<bool, 6>, 18>& matrix)
     }
 }
 
-uint64_t key_inputs::send_output() const
+uint64_t key_inputs::get_output() const
 {
     uint64_t output = 0 | modifiers;
     output |= reserved << 8;

@@ -6,6 +6,7 @@
 #define USB_DRIVER_BOARD_CONSTS_H
 
 #define KEY_BUFFER_SIZE 6
+#define KEY_PACKET_SIZE 2 + KEY_BUFFER_SIZE
 #define BOARD_ROWS 6
 #define BOARD_COLS 18
 #define FN_ROW 5

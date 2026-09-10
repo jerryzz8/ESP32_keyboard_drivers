@@ -1,3 +1,3 @@
-int main() {
-// write your code here
+void app_main() {
+
 }
