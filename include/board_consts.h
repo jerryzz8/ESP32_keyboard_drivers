@@ -11,5 +11,6 @@
 #define BOARD_COLS 18
 #define FN_ROW 5
 #define FN_COL 13
+#define OUTPUT_DELAY 2
 
 #endif //USB_DRIVER_BOARD_CONSTS_H
