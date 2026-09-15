@@ -2,12 +2,14 @@
 // Created by jerry on 28/08/2026.
 //
 
-#ifndef USB_DRIVER_KEY_INPUTS_H
-#define USB_DRIVER_KEY_INPUTS_H
+#ifndef CUST_KB_ESP32S3_KEY_INPUTS_H
+#define CUST_KB_ESP32S3_KEY_INPUTS_H
 
 #include <array>
 #include <cstdint>
 #include <mutex>
+
+#include "../../../../../Users/jerry/.platformio/packages/toolchain-riscv32-esp/riscv32-esp-elf/include/c++/15.2.0/memory"
 
 /**
  * This class reads the matrix driver output and maps it to the associated HID codes.
@@ -31,7 +33,6 @@ private:
     int key_count;
 };
 
-inline key_inputs key_singleton;
+inline std::unique_ptr<key_inputs> key_singleton;
 
-
-#endif //USB_DRIVER_KEY_INPUTS_H
+#endif //CUST_KB_ESP32S3_KEY_INPUTS_H

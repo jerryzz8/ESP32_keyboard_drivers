@@ -4,9 +4,9 @@
 
 #include "key_inputs.h"
 
-#include <cstring>
-#include <matrix_key_map.h>
-#include <board_consts.h>
+#include "matrix_key_map.h"
+#include "fn_key_map.h"
+#include "board_consts.h"
 
 key_inputs::key_inputs() : modifiers(0), reserved(0), keys({}), key_count(0)
 {
@@ -30,10 +30,10 @@ void key_inputs::translate_matrix(std::array<std::array<bool, 6>, 18>& matrix)
 
             if (i == FN_COL && j == FN_ROW)
             {
-                val = fn_key_map.find({i, j});
+                val = fn_key_map[i][j];
             } else
             {
-                val = matrix_key_map.find({i, j});
+                val = matrix_key_map[i][j];
             }
 
             if (val == KEY_NONE) continue;
