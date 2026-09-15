@@ -9,22 +9,29 @@
 #include <cstdint>
 #include <mutex>
 
+/**
+ * This class reads the matrix driver output and maps it to the associated HID codes.
+ *
+ * Currently the implementation simply sends the first 6 pressed keys and ignores any following keys.
+ * Extra complexity seems unnecessary at this point, however may revise design.
+ */
 class key_inputs
 {
-    public:
+public:
     key_inputs();
-    void send_matrix(std::array<std::array<bool, 6>, 18>& matrix);
+    void translate_matrix(std::array<std::array<bool, 6>, 18>& matrix);
     uint64_t get_output() const;
 
-    private:
+private:
+    mutable std::mutex mtx;
+
     uint8_t modifiers;
     uint8_t reserved;
     std::array<uint8_t, 6> keys;
     int key_count;
 };
 
-std::mutex key_mutex;
-key_inputs key_singleton;
+inline key_inputs key_singleton;
 
 
 #endif //USB_DRIVER_KEY_INPUTS_H

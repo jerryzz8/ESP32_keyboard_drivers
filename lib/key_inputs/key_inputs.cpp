@@ -13,8 +13,15 @@ key_inputs::key_inputs() : modifiers(0), reserved(0), keys({}), key_count(0)
 
 }
 
-void key_inputs::send_matrix(std::array<std::array<bool, 6>, 18>& matrix)
+void key_inputs::translate_matrix(std::array<std::array<bool, 6>, 18>& matrix)
 {
+    mtx.lock();
+
+    modifiers = 0;
+    reserved = 0;
+    keys = {};
+    key_count = 0;
+
     for (int i = 0; i < BOARD_COLS; i++)
     {
         for (int j = 0; j < BOARD_ROWS; j++)
@@ -43,15 +50,21 @@ void key_inputs::send_matrix(std::array<std::array<bool, 6>, 18>& matrix)
             key_count++;
         }
     }
+
+    mtx.unlock();
 }
 
 uint64_t key_inputs::get_output() const
 {
+    mtx.lock();
     uint64_t output = 0 | modifiers;
     output |= reserved << 8;
+
     for (int i = 0; i < KEY_BUFFER_SIZE; i++)
     {
-        output |= static_cast<uint64_t>(keys[i]) << (i * 8 + 16);
+        output |= static_cast<uint64_t>(keys[i]) << ((i + 2) * 8);
     }
+    mtx.unlock();
+
     return output;
 }
