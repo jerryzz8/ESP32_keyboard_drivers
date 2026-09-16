@@ -7,6 +7,7 @@
 #include "matrix_key_map.h"
 #include "fn_key_map.h"
 #include "board_consts.h"
+#include "../../../../../Users/jerry/.platformio/packages/toolchain-riscv32-esp/riscv32-esp-elf/include/c++/15.2.0/pstl/glue_execution_defs.h"
 
 key_inputs::key_inputs() : modifiers(0), reserved(0), keys({}), key_count(0)
 {
@@ -22,21 +23,18 @@ void key_inputs::translate_matrix(std::array<std::array<bool, 6>, 18>& matrix)
     keys = {};
     key_count = 0;
 
+    const std::array<std::array<int, 6>, 18> *key_map = matrix[FN_COL][FN_ROW] ? &fn_key_map : &matrix_key_map;
+
     for (int i = 0; i < BOARD_COLS; i++)
     {
         for (int j = 0; j < BOARD_ROWS; j++)
         {
-            int val;
-
-            if (i == FN_COL && j == FN_ROW)
+            if (matrix[i][j] == false)
             {
-                val = fn_key_map[i][j];
-            } else
-            {
-                val = matrix_key_map[i][j];
+                continue;
             }
 
-            if (val == KEY_NONE) continue;
+            const int val = (*key_map)[i][j];
 
             if (KEY_LEFTCTRL <= val && val <= KEY_RIGHTMETA) // block of mod keys "right/left {ctrl, alt, shift, meta}"
             {
